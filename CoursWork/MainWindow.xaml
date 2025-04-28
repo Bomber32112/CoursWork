@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ListView ItemsSource = "{Binding TestTest}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
+                    <GridViewColumn Header="String" DisplayMemberBinding="{Binding TestString}"/>
+                    <GridViewColumn Header="DateTime" DisplayMemberBinding="{Binding TestDateTime}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

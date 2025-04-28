@@ -19,6 +19,10 @@ namespace CoursWork
         public MainWindow()
         {
             InitializeComponent();
+            DataBase.DB.Config();
+            //DataBase.DB.Insert(new TestClass {TestDateTime = new DateTime(2025,7,10), TestString = "test"});
+            DataBase.DB.TestTest = DataBase.DB.SelectAll<TestClass>();
+            DataContext = DataBase.DB;
         }
     }
 }

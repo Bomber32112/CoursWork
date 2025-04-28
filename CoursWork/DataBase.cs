@@ -13,13 +13,14 @@ namespace CoursWork
     {
         public MySqlConnection SqlConnection { get; set; }
         public List<ForeignKey> foreignKeys { get; set; } = new();
+        public ObservableCollection<TestClass> TestTest { get; set; } = new();
         public bool Config() 
         {
             MySqlConnectionStringBuilder MSBuilder = new MySqlConnectionStringBuilder();
             MSBuilder.Server = "192.168.200.13";
             MSBuilder.UserID = "student";
             MSBuilder.Password = "student";
-            MSBuilder.Database = "";
+            MSBuilder.Database = "1125_2025_Nosikov_Ilya";
             MSBuilder.CharacterSet = "utf8mb4";
             SqlConnection = new(MSBuilder.ToString());
 
@@ -130,6 +131,8 @@ namespace CoursWork
                 {
                     string tableName = string.Empty;
                     string columnName = string.Empty;
+                    string referencedTableName = string.Empty;
+                    string referencedColumnName = string.Empty;
                     if (!DR.IsDBNull(0))
                         tableName = DR.GetString(0);
                     else
@@ -138,7 +141,15 @@ namespace CoursWork
                         columnName = DR.GetString(1);
                     else
                         return result;
-                    foreignKeys.Add(new ForeignKey { TableName = tableName, ColumnName = columnName });
+                    if (!DR.IsDBNull(2))
+                        referencedTableName = DR.GetString(2);
+                    else
+                        return result;
+                    if (!DR.IsDBNull(3))
+                        referencedColumnName = DR.GetString(3);
+                    ForeignKey FK = new ForeignKey { TableName = tableName, ColumnName = columnName, ReferencedTableName = referencedTableName, ReferencedColumnName = referencedColumnName };
+                    if (!foreignKeys.Contains(FK))
+                        foreignKeys.Add(FK);
                 }
             SqlConnection.Close();
             return result;
@@ -147,6 +158,9 @@ namespace CoursWork
         {
             public string TableName { get; set; } //where foreign key
             public string ColumnName { get; set; } //name of foreign key
+            public string ReferencedTableName { get; set; }
+            public string ReferencedColumnName { get; set; }
+
         }
 
 
