@@ -125,7 +125,7 @@ namespace CoursWork
             bool result = false;
             var type = row.GetType();
             var attribute = type.GetCustomAttributes(typeof(MySqlTableAttribute), false).FirstOrDefault() as MySqlTableAttribute;
-            using (var MySqlCmd = new MySqlCommand($"SELECT TABLE_NAME,COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '{SqlConnection.Database}' AND REFERENCED_TABLE_NAME = '{attribute.TableName}';", SqlConnection))
+            using (var MySqlCmd = new MySqlCommand($"SELECT TABLE_NAME,COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '{SqlConnection.Database}' AND REFERENCED_TABLE_NAME = '{attribute.TableName}';", SqlConnection))
             using (var DR = MySqlCmd.ExecuteReader())
                 while (DR.Read())
                 {
